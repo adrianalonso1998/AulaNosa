@@ -30,15 +30,21 @@
         include_once "../CarpetaModelo/Usuario.php";
         include_once "../CarpetaModelo/Alumno.php";
         /*añadir los datos del alumno*/include_once "../CarpetaDatos/AlumnoDAO.php";
-        /*añadir los datos del alumno*/$aluDAO1=new AlumnoDAO();
+        include_once "../CarpetaModelo/Autenticacion.php";
+        /*añadir los datos del alumno*/$autenticacion=new Autenticacion();
         session_start();
         if (isset($_SESSION['sesion'])) {
         $usuario1=$_SESSION['sesion'];
-       /*añadir los datos del alumno*/ $alumno1=$aluDAO1->obtenerAlumno($usuario1);
-       echo "login:"; echo $usuario1->getLogin();echo "<br>";
-       echo "Contraseña:"; echo $usuario1->getPassword();echo "<br>";
-       echo "nombre:";  echo $alumno1->getNombre();echo "<br>";
-       echo "apellidos:";  echo $alumno1->getApellidos();echo "<br>";
+       /*añadir los datos del alumno*/ $alumno1=$autenticacion->obtenerAlumno($usuario1);
+       if ($alumno1 != false) {
+        echo "login:"; echo $usuario1->getLogin();echo "<br>";
+        echo "Contraseña:"; echo $usuario1->getPassword();echo "<br>";
+        echo "nombre:";  echo $alumno1->getNombre();echo "<br>";
+        echo "apellidos:";  echo $alumno1->getApellidos();echo "<br>";
+    } else {
+        echo "No se pudieron recuperar los datos del alumno";
+    }
+       
     }
         ?>
         <form action="deslogar.php" method="POST">
